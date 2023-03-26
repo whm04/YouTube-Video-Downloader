@@ -34,7 +34,7 @@ class YoutubeDownloadWindow(tk.Tk):
 
     def download_info_dict(self):
         ydl_opts = {
-            'format': 'best',
+            'format': 'bestvideo[ext=mp4]+bestaudio/best',
             'forcejson': True,
             'dump_single_json': True,
         }
@@ -101,7 +101,7 @@ class YoutubeDownloadWindow(tk.Tk):
         if data['status'] == 'downloading':
             downloaded = data['downloaded_bytes']
 
-            total = data['total_bytes_estimate']
+            total = data['total_bytes']  if data.get('total_bytes' ,None) else data['total_bytes_estimate']
             percentage = downloaded / total * 100
             percentage = round(percentage, 2)
            
@@ -193,6 +193,7 @@ class YoutubeDownloadWindow(tk.Tk):
     
         # configuring the background color of the window  
         self.config(bg = "#FEE4E3")  
+        
     
         # configuring the icon of the window  
         ##self.iconbitmap("download1.ico")  
