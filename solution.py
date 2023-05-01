@@ -21,7 +21,7 @@ class YoutubeDownloadWindow(tk.Tk):
     def get_unique_resolutions(self, inf_dict):
         resolutions = {}
         for format in inf_dict['formats']:
-            if re.match(r'^\d+p', format['format_note']):
+            if re.match(r'^\d+p', format['format_note']) and format['audio_channels']:
                 resolution_id = format['format_id']
                 resolution = format['format_note']
                 if 'HDR' in resolution:
