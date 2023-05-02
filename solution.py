@@ -21,11 +21,11 @@ class YoutubeDownloadWindow(tk.Tk):
     def get_unique_resolutions(self, inf_dict):
         resolutions = {}
         for format in inf_dict['formats']:
-            if re.match(r'^\d+p', format['format_note']) and format['audio_channels']:
+            if re.match(r'^\d+p', format['format_note']) :
                 resolution_id = format['format_id']
                 resolution = format['format_note']
                 if 'HDR' in resolution:
-                    resolution = re.search(r'\d+p HDR', resolution)[0]
+                    resolution = re.search(r'\d+p\d* HDR', resolution)[0]
                 resolutions[resolution ] =resolution_id
                 
         resolutions = [(v, k) for k, v in resolutions.items()]
@@ -118,7 +118,8 @@ class YoutubeDownloadWindow(tk.Tk):
         download_folder = self.download_dir.get()
 
         return {
-            'format': format,
+            'format': f"{format}+bestaudio",
+            'merge_output_format': 'mkv' ,
             'progress_hooks': [self.progress_hook],
             'outtmpl': os.path.join(
                 download_folder, '%(title)s-%(format)s.%(ext)s'
